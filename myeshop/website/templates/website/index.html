@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>Item list</p>
+{% if items %}
+<ul>
+    {% for item in items %}
+    <li>
+        {{ item.name }}
+        <form action="addItem" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="item_id" name="item_id" value="{{ item.id }}">
+            <button type="submit">Add to basket</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No items are available.</p>
+{% endif %}
+
+<p>Basket</p>
+{% if basket_content %}
+<ul>
+    {% for item in basket_content %}
+    <li>{{ item.name }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No items are available.</p>
+{% endif %}
+
+<a href="createOrder">Proceed to payment</a>
+
+</body>
+</html>

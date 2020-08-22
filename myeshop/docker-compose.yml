@@ -7,6 +7,16 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  litecoind:
+    image: salessandri/docker-litecoind:latest
+    ports:
+      - 19443:19443
+    volumes:
+      - ./litecoin.conf:/litecoin/litecoin.conf
+    command:
+      - -conf=/litecoin/litecoin.conf
+    logging:
+      driver: none
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -16,3 +26,4 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - litecoind
